@@ -49,30 +49,30 @@ def exibir_npcs(): #Ao invés de deixar solto criamo um função que exibe os np
 def exibir_npc(npc):
     print(f"Nome: {npc['nome']} // Level: {npc['level']} // Dano: {npc['dano']} // HP: {npc['hp']} // EXP: {npc['exp']}")
 
-def exibir_player():
+def exibir_player(): #A mesma função que o de mostrar as informações do npc mas agora com o player
     print(f"Nome: {player['nome']} // Level: {player['level']} // Dano: {player['dano']} // HP: {player['hp']}/{player['hp_max']} // EXP: {player['exp']}/{player['exp_max']}")
 
-def reset_player():
+def reset_player(): #Um reset de hp para o player a cada batalha
     player['hp'] = player['hp_max']
 
-def reset_npc(npc):
+def reset_npc(npc): #Um reset para os NPCs a cada batalha, se não o player vai sempre ganhar direto por já estar 0
     npc['hp'] = npc['hp_max']
 
-def level_up():
+def level_up(): #Sistema para upar level
     if player['exp'] >= player['exp_max']:
         player['level'] += 1
         player['exp'] = 0
         player['exp_max'] = player['exp_max'] * 2
         player['hp_max'] += 20
         
-def iniciar_bataha(npc):  #função para mostrar a batalha junto com todas as outras.
+def iniciar_bataha(npc):  #Função para mostrar a batalha junto com todas as outras.
     while player['hp'] > 0 and npc['hp'] > 0:
         atacar_npc(npc)
         atacar_player(npc)
         exibir_infos_batalha(npc)
         print('-------------------\n')
     
-    if player['hp'] > 0:
+    if player['hp'] > 0: #Condições para a vitória e derrota do player
         print(f"O {player['nome']} venceu!\nVocê ganhou {npc['exp']} de exp!")
         player['exp'] += npc['exp']
         exibir_player()
