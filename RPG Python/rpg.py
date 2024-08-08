@@ -9,7 +9,8 @@ player = {
    "hpmax": 50,
    "exp": 0,
    "expmax": 15,
-   "dano": 15
+   "dano": 15,
+   "dinheiro": 0
 }
 
 mochila = []
@@ -41,7 +42,7 @@ def exibir_npc(npc):
     print(f"Nome: {npc['nome']} // Level: {npc['level']} // HP: {npc['hp']} // EXP: {npc['exp']}")
 
 def exibir_player():
-    print(f"Nome: {player['nome']} // Level: {player['level']} // HP: {player['hp']}/{player['hpmax']} // EXP: {player['exp']}/{player['expmax']} // Dano: {player['dano']}")
+    print(f"Nome: {player['nome']} // Level: {player['level']} // HP: {player['hp']}/{player['hpmax']} // EXP: {player['exp']}/{player['expmax']} // Dano: {player['dano']} // Dinheiro: {player['dinheiro']}")
 
 def atacar_npc(npc):
     npc['hp'] -= player['dano']
@@ -81,8 +82,9 @@ def iniciar_batalha(npc):
         print('-----------------------')
 
     if player['hp'] > 0:
-        print(f"{player['nome']} venceu!\nVocê ganhou {npc['exp']} de experiência.")
+        print(f"{player['nome']} venceu!\nVocê ganhou {npc['exp']} de experiência e {npc['level'] * 5} de dinheiro.")
         player['exp'] += npc['exp']
+        player['dinheiro'] += npc['level'] * 5
     else:
         print(f"O {npc['nome']} venceu! /n Tente de novo da próxima vez.")
         exibir_npcs()
@@ -90,55 +92,194 @@ def iniciar_batalha(npc):
     level_up()
     player_reset()
     npc_reset(npc)
+    sleep(2)
+    mostrar_menu()
 
 def mostrar_loja():
     lista_escolha = int(input("Olá seja bem vindo a loja da masmorra! O que gostaria de comprar?\n[1]Itens\n[2]Armaduras\n[3]Armas\n[4]Informações dos Produtos\n[5]Sair\n"))
 
     if lista_escolha == 1:
+        sleep(1)
         mostrar_itens_loja()
 
+    elif lista_escolha == 2:
+        sleep(1)
+        mostrar_armaduras_loja()
+    
+    elif lista_escolha == 3:
+        sleep(1)
+        mostrar_armas_loja()
+    
+    elif lista_escolha == 4:
+        sleep(1)
+        mostrar_info_produtos()
+
+    elif lista_escolha == 5:
+        print("Obrigado e volte sempre!")
+        sleep(2)
+        mostrar_menu()
+    
+    else:
+        print("Escolha inválida!")
+
 def mostrar_itens_loja():
-        produto_escolha = int(input("Temos esses Itens Disponíveis:\n[1]Poção de Vida\n[2]Poção de Mana\n[3]Mini Elixir\n[4]Sair\n"))
-        if produto_escolha == 1:
-            print("Aqui está!\nGostaria de mais alguma coisa?")
-            mostrar_itens_loja()
-        elif produto_escolha == 2:
-            print("Aqui está!\nGostaria de mais alguma coisa?")
-            mostrar_itens_loja()
-        elif produto_escolha == 3:
-            print("Aqui está!\nGostaria de mais alguma coisa?")
-            mostrar_itens_loja()
-        elif produto_escolha == 4:
-            mostrar_loja()
-        else:
-            print("Escolha inválida!")
+    produto_escolha = int(input("Temos esses Itens Disponíveis:\n[1]Poção de Vida\n[2]Poção de Mana\n[3]Mini Elixir\n[4]Sair\n"))
+    if produto_escolha == 1:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_itens_loja()
+    elif produto_escolha == 2:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_itens_loja()
+    elif produto_escolha == 3:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_itens_loja()
+    elif produto_escolha == 4:
+        sleep(1)
+        mostrar_loja()
+    else:
+        print("Escolha inválida!")
+        sleep(1)
+
+def mostrar_armaduras_loja():
+    armadura_escolha = int(input("Temos essas Armaduras Disponíveis:\n[1]Armadura de Fogo\n[2]Armadura de Vento\n[3]Armadura de Água\n[4]Sair\n"))
+    if armadura_escolha == 1:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_armaduras_loja()
+    elif armadura_escolha == 2:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_armaduras_loja()
+    elif armadura_escolha == 3:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_armaduras_loja()
+    elif armadura_escolha == 4:
+        sleep(1)
+        mostrar_loja()
+    else:
+        print("Escolha Inválida!")
+        sleep(1)
+
+def mostrar_armas_loja():
+    arma_escolha = int(input("Temos essas Armas Disponíeis:\n[1]Espada\n[2]Facas\n[3]Clava\n[4]Sair\n"))
+    if arma_escolha == 1:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_armas_loja()
+    elif arma_escolha == 2:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_armas_loja()
+    elif arma_escolha == 3:
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        sleep(1)
+        mostrar_armas_loja()
+    elif arma_escolha == 4:
+        sleep(1)
+        mostrar_loja()
+    else:
+        print("Escolha Inválida!")
+        sleep(1)
+
+def mostrar_info_produtos():
+    print("Itens:\nPoção de Vida: +15 Vida - 18$\nPoção de Mana: +10 Mana - 18$\nElixir: +15 Vida +10 Mana - 36$\nArmaduras:\nArmadura de Fogo: +15 Vida +Resistencia a Fogo - 60$\nArmadura de Água: +15 Mana +Resistencia a Água - 60$\nArmadura de Vento: +15 Velocidade +Resistencia a Vento - 60$\nArmas:\nEspada: +20 Dano - 30$\nFacas: +10 Dano +5 Velocidade - 25$\nClava: +15 Dano +3 Mana - 27$")
+    sleep(2)
+    mostrar_loja()
 
 def mostrar_menu():
     menu = int(input(f"{pnome} o que gostaria de fazer agora?\n[1]Explorar\n[2]Batalhar\n[3]Comprar Itens\n[4]Status\n[5]Mochila\n[6]Sair\n"))
     if menu == 2:
+        sleep(1)
         gerar_npcs(1)
         npc_selecionado = npc_lista[0]
         iniciar_batalha(npc_selecionado)
     
     elif menu == 3:
+        sleep(1)
         mostrar_loja()
     
     elif menu == 4:
+        sleep(1)
         exibir_player()
+        mostrar_menu()
 
     elif menu == 6:
+        sleep(1)
         print("Até uma outra aventura!")
-
+        return False
     else:
         print("Escolha inválida!")
 
     sleep(2)
 
-    
-
 while True:
-    mostrar_menu()
-    '''if menu == 2:
+    if not mostrar_menu():
+        break
+
+
+
+
+
+
+
+
+
+
+
+
+'''def mostrar_loja():
+    # Exibe o menu principal da loja e obtém a escolha do usuário
+    escolha = int(input("Olá, seja bem-vindo à loja da masmorra! O que gostaria de comprar?\n[1]Itens\n[2]Armaduras\n[3]Armas\n[4]Informações dos Produtos\n[5]Sair\n"))
+
+    if escolha == 1:
+        mostrar_itens_loja()
+    elif escolha == 2:
+        mostrar_armaduras_loja()
+    elif escolha == 3:
+        mostrar_armas_loja()
+    elif escolha == 5:
+        print("Obrigado e volte sempre!")
+        mostrar_menu()  # Corrigido para chamar a função mostrar_menu()
+    else:
+        print("Escolha inválida!")
+        mostrar_loja()  # Chama novamente a função mostrar_loja para tentar uma nova escolha
+
+def mostrar_itens_loja():
+    # Lista de itens disponíveis
+    itens = ["Poção de Vida", "Poção de Mana", "Mini Elixir"]
+    # Chama a função para exibir os itens, passando a lista de itens e a função para retornar ao menu principal
+    mostrar_categoria("Itens", itens, mostrar_loja)
+
+def mostrar_armaduras_loja():
+    # Lista de armaduras disponíveis
+    armaduras = ["Armadura de Fogo", "Armadura de Vento", "Armadura de Água"]
+    # Chama a função para exibir as armaduras, passando a lista de armaduras e a função para retornar ao menu principal
+    mostrar_categoria("Armaduras", armaduras, mostrar_loja)
+
+def mostrar_armas_loja():
+    # Lista de armas disponíveis
+    armas = ["Espada", "Facas", "Clava"]
+    # Chama a função para exibir as armas, passando a lista de armas e a função para retornar ao menu principal
+    mostrar_categoria("Armas", armas, mostrar_loja)
+
+def mostrar_categoria(categoria, itens, func_sair):
+    # Exibe os itens da categoria e obtém a escolha do usuário
+    escolha = int(input(f"Temos esses {categoria} Disponíveis:\n" + "\n".join([f"[{i+1}]{item}" for i, item in enumerate(itens)]) + "\n[4]Sair\n"))
+    
+    if 1 <= escolha <= len(itens):
+        print("Aqui está!\nGostaria de mais alguma coisa?")
+        mostrar_categoria(categoria, itens, func_sair)  # Chama a função novamente para continuar mostrando os itens
+    elif escolha == 4:
+        func_sair()  # Chama a função de saída para voltar ao menu principal
+    else:
+        print("Escolha inválida!")
+        mostrar_categoria(categoria, itens, func_sair)  # Chama a função novamente para tentar uma nova escolha'''
+
+'''if menu == 2:
         gerar_npcs(1)
         npc_selecionado = npc_lista[0]
         iniciar_batalha(npc_selecionado)
