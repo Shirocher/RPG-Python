@@ -10,6 +10,8 @@ player = {
    "exp": 0,
    "expmax": 15,
    "dano": 15,
+   "mana": 10,
+   "manamax": 10,
    "dinheiro": 0
 }
 
@@ -63,6 +65,8 @@ def level_up():
         player['exp'] = 0
         player['expmax'] = player['expmax'] * 2
         player['hpmax'] += 20
+        player['manamax'] += 5
+        player['dano'] += 5
 
 def exibir_infos_batalha(npc):
     if player['hp'] < 0:
@@ -125,15 +129,30 @@ def mostrar_loja():
 def mostrar_itens_loja():
     produto_escolha = int(input("Temos esses Itens Disponíveis:\n[1]Poção de Vida\n[2]Poção de Mana\n[3]Mini Elixir\n[4]Sair\n"))
     if produto_escolha == 1:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 18:
+            print('Aqui está!\nGostaria de mais alguma coisa?')
+            mochila.append('Poção de Vida')
+            player['dinheiro'] -= 18
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_itens_loja()
     elif produto_escolha == 2:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 18:
+            print('Aqui está!\nGostaria de mais alguma coisa?')
+            mochila.append('Poção de Mana')
+            player['dinheiro'] -= 18
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_itens_loja()
     elif produto_escolha == 3:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 36:
+            print('Aqui está!\nGostaria de mais alguma coisa?')
+            mochila.append('Mini Elixir')
+            player['dinheiro'] -= 36
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_itens_loja()
     elif produto_escolha == 4:
@@ -146,15 +165,30 @@ def mostrar_itens_loja():
 def mostrar_armaduras_loja():
     armadura_escolha = int(input("Temos essas Armaduras Disponíveis:\n[1]Armadura de Fogo\n[2]Armadura de Vento\n[3]Armadura de Água\n[4]Sair\n"))
     if armadura_escolha == 1:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 60:
+            print("Aqui está!\nGostaria de mais alguma coisa?")
+            mochila.append('Armadura de Fogo')
+            player ['dinheiro'] -= 60
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_armaduras_loja()
     elif armadura_escolha == 2:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 60:
+            print("Aqui está!\nGostaria de mais alguma coisa?")
+            mochila.append('Armadura de Água')
+            player ['dinheiro'] -= 60
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_armaduras_loja()
     elif armadura_escolha == 3:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 60:
+            print("Aqui está!\nGostaria de mais alguma coisa?")
+            mochila.append('Armadura de Vento')
+            player ['dinheiro'] -= 60
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_armaduras_loja()
     elif armadura_escolha == 4:
@@ -165,17 +199,32 @@ def mostrar_armaduras_loja():
         sleep(1)
 
 def mostrar_armas_loja():
-    arma_escolha = int(input("Temos essas Armas Disponíeis:\n[1]Espada\n[2]Facas\n[3]Clava\n[4]Sair\n"))
+    arma_escolha = int(input("Temos essas Armas Disponíveis:\n[1]Espada\n[2]Facas\n[3]Clava\n[4]Sair\n"))
     if arma_escolha == 1:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 30:
+            print("Aqui está!\nGostaria de mais alguma coisa?")
+            mochila.append('Espada')
+            player['dinheiro'] -= 30
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_armas_loja()
     elif arma_escolha == 2:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 25:
+            print("Aqui está!\nGostaria de mais alguma coisa?")
+            mochila.append('Facas')
+            player['dinheiro'] -= 25
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_armas_loja()
     elif arma_escolha == 3:
-        print("Aqui está!\nGostaria de mais alguma coisa?")
+        if player ['dinheiro'] >= 27:
+            print("Aqui está!\nGostaria de mais alguma coisa?")
+            mochila.append('Clava')
+            player['dinheiro'] -= 27
+        else:
+            print("Você não tem dinheiro o suficiente!")
         sleep(1)
         mostrar_armas_loja()
     elif arma_escolha == 4:
@@ -186,10 +235,70 @@ def mostrar_armas_loja():
         sleep(1)
 
 def mostrar_info_produtos():
-    print("Itens:\nPoção de Vida: +15 Vida - 18$\nPoção de Mana: +10 Mana - 18$\nElixir: +15 Vida +10 Mana - 36$\nArmaduras:\nArmadura de Fogo: +15 Vida +Resistencia a Fogo - 60$\nArmadura de Água: +15 Mana +Resistencia a Água - 60$\nArmadura de Vento: +15 Velocidade +Resistencia a Vento - 60$\nArmas:\nEspada: +20 Dano - 30$\nFacas: +10 Dano +5 Velocidade - 25$\nClava: +15 Dano +3 Mana - 27$")
+    print("Itens:\nPoção de Vida: +15 Vida - 18$\nPoção de Mana: +10 Mana - 18$\nMini Elixir: +15 Vida +10 Mana - 36$\nArmaduras:\nArmadura de Fogo: +15 Vida +Resistencia a Fogo - 60$\nArmadura de Água: +15 Mana +Resistencia a Água - 60$\nArmadura de Vento: +15 Velocidade +Resistencia a Vento - 60$\nArmas:\nEspada: +20 Dano - 30$\nFacas: +10 Dano +5 Velocidade - 25$\nClava: +15 Dano +3 Mana - 27$")
     sleep(2)
     mostrar_loja()
 
+def restaurar_vida():
+    if player['hp'] > player['hpmax']:
+        player['hp'] = player['hpmax']
+        print("Você recuperou a sua vida!")
+
+def restaurar_status(restaurar_hp, restaurar_mana):
+    player['hp'] += restaurar_hp
+    if player['hp'] > player['hpmax']:
+        player['hp'] = player['hpmax']
+    
+    player['mana'] += restaurar_mana
+    if player['mana'] > player['manamax']:
+        player['mana'] = player['manamax']
+
+
+def usar_item():
+    if not mochila:
+        print("Sua Mochila está vazia!")
+        sleep(1)
+        mostrar_menu()
+        return
+    
+    print("Itens na mochila:")
+    for index, item in enumerate(mochila,1):
+        print(f"[{index}] {item}")
+
+    try:
+    
+        escolha_item = int(input("Escolha o número do item que quer usar: "))
+
+        if escolha_item < 1 or escolha_item > len(mochila):
+            print("Escolha inválida!")
+            sleep(1)
+            usar_item()
+            return
+    
+        item_usado = mochila[escolha_item - 1]
+
+        if item_usado == 'Poção de Vida':
+            restaurar_status(15, 0)
+            print("Você recuperou a sua vida!")
+        
+        elif item_usado == 'Poção de Mana':
+            restaurar_status(0, 10)
+            print("Você recuperou sua mana!")
+        
+        elif item_usado == "Mini Elixir":
+            restaurar_status(15, 10)
+            print("Você recuperou sua vida e sua mana!")
+        
+        mochila.remove(item_usado)
+
+    except ValueError as e:
+        print(e)
+        sleep(1)
+        usar_item()
+
+    sleep(1)
+    mostrar_menu()
+        
 def mostrar_menu():
     menu = int(input(f"{pnome} o que gostaria de fazer agora?\n[1]Explorar\n[2]Batalhar\n[3]Comprar Itens\n[4]Status\n[5]Mochila\n[6]Sair\n"))
     if menu == 2:
@@ -205,6 +314,11 @@ def mostrar_menu():
     elif menu == 4:
         sleep(1)
         exibir_player()
+        mostrar_menu()
+    
+    elif menu == 5:
+        sleep(1)
+        print(mochila)
         mostrar_menu()
 
     elif menu == 6:
