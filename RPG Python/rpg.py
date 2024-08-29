@@ -1,3 +1,4 @@
+import random
 from time import sleep
 
 pnome = str(input('Olá, seja bem vindo a esse novo mundo de aventuras, aqui você poderá explorar, batalhar e upar o quanto quiser!\nPrimeiro me informe seu nome: '))
@@ -79,22 +80,35 @@ def exibir_infos_batalha(npc):
     print(f"{npc['nome']}: {npc['hp']}/{npc['hpmax']}")
 
 def iniciar_batalha(npc):
-    while player['hp'] > 0 and npc['hp'] > 0:
-        atacar_npc(npc)
-        atacar_player(npc)
-        exibir_infos_batalha(npc)
-        print('-----------------------')
+    while player['hp'] and npc['hp'] > 0:
+        menu_batalha = int(input("Um Monstro Apareceu!\nO que você gostaria de fazer?\n[1]Atacar\n[2]Ataque Especial\n[3]Usar Item\n[4]Fugir\n"))
+        if menu_batalha == 1:
+            atacar_npc(npc)
+            atacar_player(npc)
+            exibir_infos_batalha(npc)
+            print('-----------------------')
 
-    if player['hp'] > 0:
-        print(f"{player['nome']} venceu!\nVocê ganhou {npc['exp']} de experiência e {npc['level'] * 5} de dinheiro.")
-        player['exp'] += npc['exp']
-        player['dinheiro'] += npc['level'] * 5
-    else:
-        print(f"O {npc['nome']} venceu! /n Tente de novo da próxima vez.")
-        exibir_npcs()
+            if player['hp'] > 0:
+                print(f"{player['nome']} venceu!\nVocê ganhou {npc['exp']} de experiência e {npc['level'] * 5} de dinheiro.")
+                player['exp'] += npc['exp']
+                player['dinheiro'] += npc['level'] * 5
+            else:
+                print(f"O {npc['nome']} venceu! /n Tente de novo da próxima vez.")
+                exibir_npcs()
+            break
+        
+        elif menu_batalha == 2:
+            print('Escolha o ataque que vai usar')
+            break
+        
+        elif menu_batalha == 3:
+            usar_item()
+        
+        elif menu_batalha == 4:
+            print("Você fugiu!")
+            break
 
     level_up()
-    player_reset()
     npc_reset(npc)
     sleep(2)
     mostrar_menu()
@@ -297,12 +311,95 @@ def usar_item():
         usar_item()
 
     sleep(1)
-    mostrar_menu()
-        
+
+# Função para gerar o mapa
+def gerar_mapas(largura, altura):
+    mapa = []
+    for _ in range(altura):
+        linha = []
+        for _ in range(largura):
+            tipo_casa = random.choices(['vazia', 'monstro', 'baú', 'escada'], [5, 3, 1, 1])[0]
+            linha.append(tipo_casa)
+        mapa.append(linha)
+    
+    return mapa
+
+def exibir_mapa(mapa, pos_jogador):
+    for y in range(len(mapa)):
+        linha = ""
+        for x in range(len(mapa[0])):
+            if (x, y) == pos_jogador:
+                linha += "P "  # Representa o jogador
+            elif mapa[y][x] == 'vazia':
+                linha += "X "
+            elif mapa[y][x] == 'monstro':
+                linha += "X "
+            elif mapa[y][x] == 'baú':
+                linha += "X "
+            elif mapa[y][x] == 'escada':
+                linha += "X "
+        print(linha)
+    print()
+
+def movimentar_jogador(pos_jogador, direcao, largura, altura):
+    x, y = pos_jogador
+    if direcao == 'w' and y > 0:
+        y -= 1
+    elif direcao == 's' and y < altura - 1:
+        y += 1
+    elif direcao == 'a' and x > 0:
+        x -= 1
+    elif direcao == 'd' and x < largura - 1:
+        x += 1
+    return (x, y)
+
+def interagir_casa(mapa, pos_jogador):
+    x, y = pos_jogador
+    casa = mapa[y][x]
+    if casa == 'monstro':
+        print("Você encontrou um monstro!")
+        gerar_npcs(1)
+        npc_selecionado = npc_lista[0]
+        iniciar_batalha(npc_selecionado)
+        interagir_casa()
+    elif casa == 'baú':
+        print("Você encontrou um baú!")
+        mochila.append('Item do baú')
+        interagir_casa()
+    elif casa == 'escada':
+        print("Você encontrou uma escada para o próximo andar!")
+        # Lógica para o próximo andar
+        pass
+    elif casa == 'vazia':
+        print("Você está em uma casa vazia.")
+
+def explorar_mapa(mapa):
+    largura = len(mapa[0])
+    altura = len(mapa)
+    pos_jogador = (0, 0)  # Começa no canto superior esquerdo
+    while True:
+        exibir_mapa(mapa, pos_jogador)
+        comando = input("Para onde você deseja ir? (w/a/s/d para mover, q para sair): ")
+        if comando == 'q':
+            break
+        elif comando in ['w', 'a', 's', 'd']:
+            nova_pos = movimentar_jogador(pos_jogador, comando, largura, altura)
+            if nova_pos != pos_jogador:
+                pos_jogador = nova_pos
+                interagir_casa(mapa, pos_jogador)
+        else:
+            print("Comando inválido.")
+
 def mostrar_menu():
     menu = int(input(f"{pnome} o que gostaria de fazer agora?\n[1]Explorar\n[2]Batalhar\n[3]Comprar Itens\n[4]Status\n[5]Mochila\n[6]Sair\n"))
-    if menu == 2:
+    if menu == 1:
         sleep(1)
+        mapa = gerar_mapas(5, 5)  # Cria um mapa 5x5
+        explorar_mapa(mapa)  # Permite ao jogador explorar o mapa
+    
+    elif menu == 2:
+        sleep(1)
+        print("Bem vindo ao Coliseu, está na hora da batalha!")
         gerar_npcs(1)
         npc_selecionado = npc_lista[0]
         iniciar_batalha(npc_selecionado)
