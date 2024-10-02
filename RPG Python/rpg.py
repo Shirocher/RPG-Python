@@ -86,8 +86,9 @@ def exibir_infos_batalha(npc):
     print(f"{npc['nome']}: {npc['hp']}/{npc['hpmax']}")
 
 def iniciar_batalha_coli(npc):
+    c = 1
     while player['hp'] > 0 and npc['hp'] > 0:
-        menu_batalha = int(input("Um Monstro Apareceu!\nO que você gostaria de fazer?\n[1]Atacar\n[2]Ataque Especial\n[3]Usar Item\n[4]Fugir\n"))
+        menu_batalha = int(input(f"Rodada {c} Monstro Apareceu!\nO que você gostaria de fazer?\n[1]Atacar\n[2]Ataque Especial\n[3]Usar Item\n[4]Parar\n"))
         if menu_batalha == 1:
             atacar_npc(npc)
             if npc['hp'] > 0:
@@ -102,7 +103,7 @@ def iniciar_batalha_coli(npc):
             else:
                 print(f"O {npc['nome']} venceu!\nTente de novo da próxima vez.")
                 exibir_npcs()
-            break
+            c += 1
         
         elif menu_batalha == 2:
             print('Escolha o ataque que vai usar')
@@ -113,7 +114,7 @@ def iniciar_batalha_coli(npc):
             usar_item()
         
         elif menu_batalha == 4:
-            print("Você fugiu!")
+            print("Você aguentou até aqui e saiu da arena!")
             break
 
     level_up()
@@ -411,7 +412,7 @@ def interagir_casa(mapa, pos_jogador):
         iniciar_batalha_exp(npc_selecionado)
     elif casa == 'baú':
         print("Você encontrou um baú!")
-        mochila.append('Item do baú')
+        mochila.append(random.choices(['Poção de Vida', 'Poção de Mana' ]))
     elif casa == 'escada':
         print("Você encontrou uma escada para o próximo andar!")
         andar_atual += 1
@@ -462,7 +463,7 @@ def mostrar_menu():
     
     elif menu == 2:
         sleep(1)
-        print("Bem-vindo ao Coliseu, está na hora da batalha!")
+        print("Bem vindo ao Coliseu, aqui você trava batalhas até não aguentar mais.\n Daremos ínicio as batalhas!\n")
         gerar_npcs(1)
         npc_selecionado = npc_lista[0]
         iniciar_batalha_coli(npc_selecionado)
